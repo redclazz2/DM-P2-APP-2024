@@ -1,8 +1,17 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:parcial_final/data/data_context.dart';
+import 'package:parcial_final/data/shared_context.dart';
+import 'package:parcial_final/views/view_person_list.dart';
 import 'package:parcial_final/views/view_register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewLogin extends StatelessWidget {
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final DataContext dataContext = DataContext();
+  final SharedDataContext sharedContext = SharedDataContext();
+
   Future<String> askForNotificationPermitions() async {
     final notificationSettings = await FirebaseMessaging.instance
         .requestPermission(
@@ -21,7 +30,7 @@ class ViewLogin extends StatelessWidget {
     return "";
   }
 
-  const ViewLogin({super.key});
+  ViewLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +50,7 @@ class ViewLogin extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: TextField(
+                controller: email,
                 decoration: InputDecoration(
                     icon: const Icon(Icons.mail),
                     iconColor: Theme.of(context).colorScheme.surface,
@@ -54,6 +64,7 @@ class ViewLogin extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: TextField(
+                controller: password,
                 decoration: InputDecoration(
                     icon: const Icon(Icons.lock),
                     iconColor: Theme.of(context).colorScheme.surface,
@@ -67,15 +78,32 @@ class ViewLogin extends StatelessWidget {
             ElevatedButton(
                 onPressed: () async {
                   String authorized = await askForNotificationPermitions();
-                  if (authorized != "") {}
+                  if (authorized != "") {
+                    var response = await dataContext.loginUser(
+                        authorized, email.text, password.text);
+
+                    if (response.statusCode == 200) {
+                      SharedPreferences shared = await sharedContext.prefs;
+                      shared.setString("AuthToken", response.body);
+
+                      Navigator.pushReplacement(
+                          // ignore: use_build_context_synchronously
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewPersonList()));
+                    }
+                  }
                 },
                 child: const Text("Login")),
             ElevatedButton(
                 onPressed: () async {
                   String authorized = await askForNotificationPermitions();
                   if (authorized != "") {
-                    Navigator.push(context, 
-                      MaterialPageRoute(builder: ((context) => ViewRegister(authorized))));
+                    // ignore: use_build_context_synchronously
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => ViewRegister(authorized))));
                   }
                 },
                 child: const Text("Register"))
