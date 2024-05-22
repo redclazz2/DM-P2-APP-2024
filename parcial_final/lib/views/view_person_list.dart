@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:parcial_final/data/data_context.dart';
+import 'package:parcial_final/data/shared_context.dart';
+import 'package:parcial_final/views/view_login.dart';
 import 'package:parcial_final/widgets/widget_person_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewPersonList extends StatelessWidget {
   final DataContext dataContext = DataContext();
-
+  final SharedDataContext sharedContext = SharedDataContext();
+  
   ViewPersonList({super.key});
 
   @override
@@ -14,8 +18,16 @@ class ViewPersonList extends StatelessWidget {
         title: const Text("User List"),
          actions: [
           ElevatedButton(
-            onPressed: () {
-              
+            onPressed: () async{
+              SharedPreferences shared = await sharedContext.prefs;
+              shared.clear();
+
+              Navigator.pushReplacement(
+                // ignore: use_build_context_synchronously
+                context, 
+                MaterialPageRoute(
+                              builder: (context) => ViewLogin())
+                );
             },
             child: Icon(
               Icons.exit_to_app_outlined,
