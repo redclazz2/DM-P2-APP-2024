@@ -64,4 +64,21 @@ class DataContext {
 
     return response;
   }
+
+  Future<http.Response> sendMessage(String email, String title, String body) async{  
+      SharedPreferences shared = await sharedContext.prefs;
+
+      var response = await http.post(Uri.parse("${url}api/Person/SendNotification"),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'bearer ${shared.getString("AuthToken")}'
+        },
+        body: jsonEncode({
+          'email': email,
+          'title': title,
+          'body': body
+        }));
+
+    return response;
+  }
 }

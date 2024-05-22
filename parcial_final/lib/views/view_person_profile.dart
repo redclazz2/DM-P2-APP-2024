@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:parcial_final/data/data_context.dart';
 import 'package:parcial_final/models/person.dart';
 
 class ViewPersonProfile extends StatelessWidget {
   final Person person;
   final TextEditingController title = TextEditingController();
   final TextEditingController body = TextEditingController();
+  final DataContext dataContext = DataContext();
 
   ViewPersonProfile({required this.person, super.key});
 
@@ -42,7 +44,7 @@ class ViewPersonProfile extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: TextField(
-                      controller: title,
+                      controller: body,
                       decoration: InputDecoration(
                           label: Text(
                             "Message Body",
@@ -51,7 +53,10 @@ class ViewPersonProfile extends StatelessWidget {
                           border: const OutlineInputBorder()),
                     ),
                   ),
-                  ElevatedButton(onPressed: (){ Navigator.pop(context); }, child: const Text("Send"))
+                  ElevatedButton(onPressed: (){ 
+                    dataContext.sendMessage(person.email, title.text, body.text);
+                    Navigator.pop(context); 
+                    }, child: const Text("Send"))
                 ],
               )),
             ),
