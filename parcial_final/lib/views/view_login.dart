@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:parcial_final/views/view_register.dart';
 
 class ViewLogin extends StatelessWidget {
   Future<String> askForNotificationPermitions() async {
@@ -73,7 +74,8 @@ class ViewLogin extends StatelessWidget {
                 onPressed: () async {
                   String authorized = await askForNotificationPermitions();
                   if (authorized != "") {
-                    
+                    Navigator.push(context, 
+                      MaterialPageRoute(builder: ((context) => ViewRegister(authorized))));
                   }
                 },
                 child: const Text("Register"))
