@@ -32,6 +32,33 @@ class ViewLogin extends StatelessWidget {
 
   ViewLogin({super.key});
 
+  void showCredentialError(context) {
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(20), topLeft: Radius.circular(20))),
+        builder: ((context) {
+          return SizedBox(
+            height: 300,
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.logout_outlined,
+                  size: 60,
+                ),
+                Text(
+                  "Bad Credentials",
+                  style: Theme.of(context).textTheme.titleLarge,
+                )
+              ],
+            )),
+          );
+        }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,6 +120,8 @@ class ViewLogin extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => ViewPersonList()));
+                    }else{
+                      showCredentialError(context);
                     }
                   }
                 },

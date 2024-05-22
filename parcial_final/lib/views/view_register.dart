@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewRegister extends StatelessWidget {
   final String deviceToken;
-  
+
   final ImagePicker picker = ImagePicker();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
@@ -25,13 +25,14 @@ class ViewRegister extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-          child: Column(     
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 textAlign: TextAlign.center,
-                "Register: Fill to create a user account", 
-                style: Theme.of(context).textTheme.titleLarge,),
+                "Register: Fill to create a user account",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: TextField(
@@ -104,21 +105,27 @@ class ViewRegister extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed:() async {
-                  var response = await dataContext.registerPerson(
-                      email.text, password.text, name.text, phone.text, role.text, deviceToken);
-          
-                  if(response.statusCode == 200){
-                    SharedPreferences shared = await sharedContext.prefs;
-                    shared.setString("AuthToken", response.body);
-                    shared.setString("AuthEmail", email.text);
+                  onPressed: () async {
+                    var response = await dataContext.registerPerson(
+                        email.text,
+                        password.text,
+                        name.text,
+                        phone.text,
+                        role.text,
+                        deviceToken);
 
-                    //print(shared.getString("AuthToken"));
-          
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ViewPersonList()));
-                  }
-                }, child: const Text("Register"))
+                    if (response.statusCode == 200) {
+                      SharedPreferences shared = await sharedContext.prefs;
+                      shared.setString("AuthToken", response.body);
+                      shared.setString("AuthEmail", email.text);
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewPersonList()));
+                    }
+                  },
+                  child: const Text("Register"))
             ],
           ),
         ),
