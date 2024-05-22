@@ -65,6 +65,7 @@ class ViewLogin extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: TextField(
                 controller: password,
+                obscureText: true,
                 decoration: InputDecoration(
                     icon: const Icon(Icons.lock),
                     iconColor: Theme.of(context).colorScheme.surface,
@@ -86,7 +87,7 @@ class ViewLogin extends StatelessWidget {
                       SharedPreferences shared = await sharedContext.prefs;
                       shared.setString("AuthToken", response.body);
                       shared.setString("AuthEmail", email.text);
-                      
+
                       Navigator.pushReplacement(
                           // ignore: use_build_context_synchronously
                           context,

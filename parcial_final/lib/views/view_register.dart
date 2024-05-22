@@ -49,6 +49,7 @@ class ViewRegister extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: TextField(
+                  obscureText: true,
                   controller: password,
                   decoration: InputDecoration(
                       icon: const Icon(Icons.lock),
