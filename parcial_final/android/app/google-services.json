@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "79106729869",
+    "project_id": "notificacionesparcialfinal",
+    "storage_bucket": "notificacionesparcialfinal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79106729869:android:c97ca86eb46521a0d4bfc4",
+        "android_client_info": {
+          "package_name": "com.example.parcial_final"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuRIwl-6WeZ3AxW_DGimPXBVIYs8D4rF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

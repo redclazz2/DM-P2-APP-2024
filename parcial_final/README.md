@@ -1,3 +1,4 @@
 # parcial_final
 
-A new Flutter project.
+Parcial Final de DM.
+Prueba de Notificaciones Push.s
