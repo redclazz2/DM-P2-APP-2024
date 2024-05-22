@@ -1,13 +1,9 @@
 import 'dart:convert';
 import 'dart:async';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:parcial_final/data/shared_context.dart';
 import 'package:parcial_final/models/person.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:path/path.dart';
-import 'package:async/async.dart';
 
 class DataContext {
   SharedDataContext sharedContext = SharedDataContext();

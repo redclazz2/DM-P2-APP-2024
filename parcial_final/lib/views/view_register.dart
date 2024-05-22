@@ -122,13 +122,16 @@ class ViewRegister extends StatelessWidget {
                       SharedPreferences shared = await sharedContext.prefs;
                       shared.setString("AuthToken", response.body);
                       shared.setString("AuthEmail", email.text);
-      
-                      if(shared.getString("selectedImage") != null) await dataContext.uploadImage();
-                      // ignore: use_build_context_synchronously
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ViewPersonList()));
+
+                      if (shared.getString("selectedImage") != null) {
+                        await dataContext.uploadImage();
+                      }
+                      if (context.mounted) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ViewPersonList()));
+                      }
                     }
                   },
                   child: const Text("Register"))

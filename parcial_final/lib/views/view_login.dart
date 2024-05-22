@@ -131,10 +131,12 @@ class ViewLogin extends StatelessWidget {
                   String authorized = await askForNotificationPermitions();
                   if (authorized != "") {
                     // ignore: use_build_context_synchronously
+                    if(context.mounted){
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: ((context) => ViewRegister(authorized))));
+                    }
                   }
                 },
                 child: const Text("Register"))
