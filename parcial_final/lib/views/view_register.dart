@@ -110,7 +110,9 @@ class ViewRegister extends StatelessWidget {
                   if(response.statusCode == 200){
                     SharedPreferences shared = await sharedContext.prefs;
                     shared.setString("AuthToken", response.body);
-                    print(shared.getString("AuthToken"));
+                    shared.setString("AuthEmail", email.text);
+
+                    //print(shared.getString("AuthToken"));
           
                     // ignore: use_build_context_synchronously
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ViewPersonList()));

@@ -85,7 +85,8 @@ class ViewLogin extends StatelessWidget {
                     if (response.statusCode == 200) {
                       SharedPreferences shared = await sharedContext.prefs;
                       shared.setString("AuthToken", response.body);
-
+                      shared.setString("AuthEmail", email.text);
+                      
                       Navigator.pushReplacement(
                           // ignore: use_build_context_synchronously
                           context,

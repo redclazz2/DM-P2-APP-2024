@@ -76,7 +76,8 @@ class DataContext {
         body: jsonEncode({
           'email': email,
           'title': title,
-          'body': body
+          'body': body,
+          'sender': shared.getString("AuthEmail")
         }));
 
     return response;
