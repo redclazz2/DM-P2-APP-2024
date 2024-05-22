@@ -12,6 +12,16 @@ class ViewPersonList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("User List"),
+         actions: [
+          ElevatedButton(
+            onPressed: () {
+              
+            },
+            child: Icon(
+              Icons.exit_to_app_outlined,
+              color: Theme.of(context).colorScheme.onError,
+            ),
+          ),]
       ),
       body: FutureBuilder(
           future: dataContext.getPersons(),

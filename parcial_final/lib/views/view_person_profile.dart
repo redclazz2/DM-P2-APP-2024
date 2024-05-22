@@ -14,18 +14,19 @@ class ViewPersonProfile extends StatelessWidget {
           title: const Text("User Profile"),
         ),
         body: Center(
-          child: Column(children: [
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             SizedBox(
-              width: 150,
-              height: 150,
+              width: 180,
+              height: 180,
               child: Image.network(person.picture),
             ),
             Text(
               person.name,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             Text(
               person.email,
+              style: Theme.of(context).textTheme.labelLarge,
             ),
             Text(
               person.phone,
@@ -33,6 +34,7 @@ class ViewPersonProfile extends StatelessWidget {
             Text(
               person.role,
             ),
+            ElevatedButton(onPressed: () {}, child: const Text("New Message"))
           ]),
         ),
       ),
