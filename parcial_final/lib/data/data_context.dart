@@ -1,9 +1,13 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:parcial_final/data/shared_context.dart';
 import 'package:parcial_final/models/person.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:path/path.dart';
+import 'package:async/async.dart';
 
 class DataContext {
   SharedDataContext sharedContext = SharedDataContext();
@@ -12,7 +16,8 @@ class DataContext {
 
   Future<http.Response> loginUser(deviceToken, mail, password) async {
     var response = await http.post(Uri.parse("${url}api/Person/Login"),
-        body: jsonEncode({'email': mail, 'password': password, 'ldevicetoken':deviceToken}),
+        body: jsonEncode(
+            {'email': mail, 'password': password, 'ldevicetoken': deviceToken}),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         });
@@ -35,7 +40,7 @@ class DataContext {
         data.add(Person(
             email: p["email"],
             password: p["password"],
-            picture: "${url}Images/${p["picture"]}", 
+            picture: "${url}Images/${p["picture"]}",
             name: p["name"],
             phone: p["phone"],
             role: p["role"]));
@@ -65,10 +70,11 @@ class DataContext {
     return response;
   }
 
-  Future<http.Response> sendMessage(String email, String title, String body) async{  
-      SharedPreferences shared = await sharedContext.prefs;
+  Future<http.Response> sendMessage(
+      String email, String title, String body) async {
+    SharedPreferences shared = await sharedContext.prefs;
 
-      var response = await http.post(Uri.parse("${url}api/Message/SendMessage"),
+    var response = await http.post(Uri.parse("${url}api/Message/SendMessage"),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'bearer ${shared.getString("AuthToken")}'
@@ -81,5 +87,21 @@ class DataContext {
         }));
 
     return response;
+  }
+
+  Future<void> uploadImage() async {
+    SharedPreferences shared = await sharedContext.prefs;
+
+    var request = http.MultipartRequest(
+        'POST', Uri.parse("${url}api/Person/ImageUpload"))
+      ..headers.addAll(<String, String>{
+        'Authorization': 'Bearer ${shared.getString("AuthToken")}'
+      });
+
+    request.fields["EMAIL"] = shared.getString("AuthEmail")!;
+    request.files.add(await http.MultipartFile.fromPath(
+        'file', shared.getString("selectedImage")!));
+
+    await request.send();
   }
 }

@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:parcial_final/data/data_context.dart';
 import 'package:parcial_final/data/shared_context.dart';
 import 'package:parcial_final/views/view_person_list.dart';
+import 'package:parcial_final/widgets/widget_image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewRegister extends StatelessWidget {
@@ -17,6 +18,8 @@ class ViewRegister extends StatelessWidget {
 
   final DataContext dataContext = DataContext();
   final SharedDataContext sharedContext = SharedDataContext();
+
+  final WidgetImagePicker imagePicker = const WidgetImagePicker();
 
   ViewRegister(this.deviceToken, {super.key});
 
@@ -104,6 +107,7 @@ class ViewRegister extends StatelessWidget {
                       border: const OutlineInputBorder()),
                 ),
               ),
+              imagePicker,
               ElevatedButton(
                   onPressed: () async {
                     var response = await dataContext.registerPerson(
@@ -118,6 +122,8 @@ class ViewRegister extends StatelessWidget {
                       SharedPreferences shared = await sharedContext.prefs;
                       shared.setString("AuthToken", response.body);
                       shared.setString("AuthEmail", email.text);
+      
+                      if(shared.getString("selectedImage") != null) await dataContext.uploadImage();
                       // ignore: use_build_context_synchronously
                       Navigator.pushReplacement(
                           context,

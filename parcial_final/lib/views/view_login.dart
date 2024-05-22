@@ -21,7 +21,6 @@ class ViewLogin extends StatelessWidget {
         AuthorizationStatus.authorized) {
       final token = await FirebaseMessaging.instance.getToken();
 
-      print("Device Token: $token");
       if (token != null) {
         return token;
       }
@@ -121,6 +120,7 @@ class ViewLogin extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => ViewPersonList()));
                     }else{
+                      // ignore: use_build_context_synchronously
                       showCredentialError(context);
                     }
                   }
